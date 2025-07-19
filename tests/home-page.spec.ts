@@ -1,12 +1,16 @@
-import { test, expect, chromium } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 
-test("homepage loads successfully", async () => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext();
-  const page = await context.newPage();
+class HomePage {
+  constructor(private page: Page) {}
 
-  await page.goto("https://automationexercise.com");
-  await expect(page).toHaveTitle(/Automation Exercise/);
+  async goto() {
+    await this.page.goto("https://automationexercise.com");
+  }
 
-  await browser.close();
-});
+  async verifyHomePageIsVisible() {
+    await expect(this.page).toHaveTitle(/Automation Exercise/);
+    await expect(this.page.locator("h1")).toHaveText("Automation Exercise");
+  }
+}
+
+export default HomePage;
