@@ -1,6 +1,6 @@
-Getting Started
+[Getting Started]
 
-Purpose
+/// Purpose
 
 This document provides setup and usage instructions for the AutomationExercise test suite. It is intended to help new team members quickly clone, run, and understand how to use and maintain the test framework.
 
