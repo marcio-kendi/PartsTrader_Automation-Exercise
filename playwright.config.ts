@@ -10,9 +10,9 @@ const baseURLs: Record<string, string> = {
 export default defineConfig({
   use: {
     baseURL: baseURLs[env],
-    headless: false,
     browserName: "chromium",
     viewport: { width: 1280, height: 720 },
+    headless: false,
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },
