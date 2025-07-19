@@ -10,11 +10,13 @@ const baseURLs: Record<string, string> = {
 export default defineConfig({
   use: {
     baseURL: baseURLs[env],
-    headless: true,
+    browserName: "chromium",
+    viewport: { width: 1280, height: 720 },
+    headless: false,
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },
   timeout: 30000,
   retries: 1,
-  testDir: "./src/tests",
+  testDir: "./tests",
 });
