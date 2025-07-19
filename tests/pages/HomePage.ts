@@ -50,8 +50,8 @@ class HomePage {
     await this.page.locator("a", { hasText: "Proceed to Checkout" }).click();
   }
 
-  async clickRegisterLogin() {
-    await this.page.getByRole("link", { name: "Register / Login" }).click();
+  async clickRegisterLogin(name: string) {
+    await this.page.getByRole("link", { name: name }).click();
   }
 }
 

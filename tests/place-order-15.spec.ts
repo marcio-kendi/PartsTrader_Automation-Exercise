@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 
-test("Test 14 - Place Order: Register while checkout", async ({ page }) => {
+test("Test 15 - Place Order: Register before checkout", async ({ page }) => {
   const home = new HomePage(page);
   const signup = new SignupPage(page);
 
@@ -41,6 +41,23 @@ test("Test 14 - Place Order: Register while checkout", async ({ page }) => {
     await home.verifyHomePageIsVisible();
   });
 
+  await test.step("Click on register / login button", async () => {
+    await home.clickRegisterLogin("Signup / Login");
+  });
+
+  await test.step("Fill all details in Signup and create account", async () => {
+    await signup.fillSignupForm(user.name, user.email);
+    await signup.completeAccountDetails(user);
+  });
+
+  await test.step("Verify 'ACCOUNT CREATED!' and click 'Continue' button", async () => {
+    await signup.verifyAccountCreatedAndContinue();
+  });
+
+  await test.step("Verify 'Logged in as username' at top", async () => {
+    await signup.verifyLoggedInAs(user.name);
+  });
+
   await test.step("Add products to cart", async () => {
     await home.addProductsToCart();
   });
@@ -51,28 +68,6 @@ test("Test 14 - Place Order: Register while checkout", async ({ page }) => {
 
   await test.step("Verify cart page is displayed", async () => {
     await home.verifyCartPageIsDisplayed();
-  });
-
-  await test.step("Proceed to checkout", async () => {
-    await home.proceedToCheckout();
-  });
-
-  await test.step("Click on register / login button", async () => {
-    await home.clickRegisterLogin();
-  });
-  await test.step("Fill all details in Signup and create account", async () => {
-    await signup.fillSignupForm(user.name, user.email);
-    await signup.completeAccountDetails(user);
-  });
-  await test.step("Verify 'ACCOUNT CREATED!' and click 'Continue' button", async () => {
-    await signup.verifyAccountCreatedAndContinue();
-  });
-  await test.step("Verify 'Logged in as username' at top", async () => {
-    await signup.verifyLoggedInAs(user.name);
-  });
-
-  await test.step("Click Cart button after logged in", async () => {
-    await home.goToCart();
   });
 
   await test.step("Click 'Proceed To Checkout' button", async () => {
@@ -110,9 +105,6 @@ test("Test 14 - Place Order: Register while checkout", async ({ page }) => {
   });
 
   await test.step("Click 'Pay and Confirm Order' button", async () => {
-    // await page.setContent(await page.content());
-
-    // Click the "Pay and Confirm Order" button
     await page.locator('button:has-text("Pay and Confirm Order")').click();
     await page.waitForTimeout(3000);
   });
